@@ -1,12 +1,21 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+// app.controller.ts
+import { Controller, Get, Query } from '@nestjs/common';
+import { ApiService } from './app.service';
 
-@Controller()
+@Controller('/api')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly apiService: ApiService) {}
 
-  @Get('/api/leads')
-  getLeads(): string {
-    return this.appService.getLeads();
+  @Get('/get-leads')
+  async getLeads(@Query('query') query?: string) {
+    let leads = await this.apiService.getAmoCRMLeads();
+
+    if (query && query.length >= 3) {
+      leads = leads.filter((lead: { name: string }) =>
+        lead.name.toLowerCase().includes(query.toLowerCase()),
+      );
+    }
+
+    return { leads };
   }
 }

@@ -1,10 +1,18 @@
+// app.module.ts
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { HttpModule } from '@nestjs/axios';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ApiService } from './app.service';
 
 @Module({
-  imports: [],
+  imports: [
+    ConfigModule.forRoot(),
+    HttpModule.register({
+      timeout: 5000,
+    }),
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [ApiService],
 })
 export class AppModule {}
