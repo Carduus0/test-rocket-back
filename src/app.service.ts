@@ -1,4 +1,3 @@
-// app.service.ts
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 // @Injectable()
 // export class AppService {
@@ -31,10 +30,9 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import axios, { AxiosResponse } from 'axios';
 @Injectable()
 export class ApiService {
-  private readonly apiUrl = 'https://scarduus.amocrm.ru/api/leads';
-  private readonly clientId = '7e5635b9-f7c0-47cd-9537-b43aa95931df';
-  private readonly clientSecret =
-    '43d1EOayuWyDuzqe3l9Kwq6lKygDW32XJC1BBUmBsDiOLlMqkih5LVOG8syZpt2e';
+  private readonly apiUrl = process.env.API_URL;
+  private readonly clientId = process.env.CLIENT_ID;
+  private readonly clientSecret = process.env.CLIENT_SECRET;
   private readonly redirectUri = 'http://www.example.com';
   private accessToken: string;
   private refreshToken: string;
